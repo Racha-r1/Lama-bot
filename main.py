@@ -257,8 +257,6 @@ if __name__ == "main":
     if not os.path.exists("files/protocols.json"):
         save_existing_protocols()
         
-    schedule.every(1).days.do(tvl_change)
-
-    while True:
-        schedule.run_pending()
-        time.sleep(1)
+    schedule.every(1).days.do(protocols_checks)
+    schedule.every(1).days.do(tvl_checks)
+    schedule.every(1).days.do(check_protocol_chains)
