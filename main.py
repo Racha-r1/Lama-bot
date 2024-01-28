@@ -249,7 +249,7 @@ def tvl_checks():
         time.sleep(1)
 
 
-if __name__ == "main":
+if __name__ == "__main__":
     # Creating necessary folders and files
     if not os.path.isdir("files"):
             os.mkdir("files")
@@ -260,3 +260,7 @@ if __name__ == "main":
     schedule.every(1).days.do(protocols_checks)
     schedule.every(1).days.do(tvl_checks)
     schedule.every(1).days.do(check_protocol_chains)
+    
+    while True:
+        schedule.run_pending()
+        time.sleep(1)
