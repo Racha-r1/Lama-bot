@@ -259,8 +259,7 @@ if __name__ == "__main__":
         
     schedule.every(1).hour.do(protocols_checks)
     schedule.every(1).hour.do(tvl_checks)
-    schedule.every(1).hour.do(check_protocol_chains)
-    
+        
     while True:
         schedule.run_pending()
         time.sleep(1)
