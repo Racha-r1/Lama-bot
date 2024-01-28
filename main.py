@@ -96,7 +96,7 @@ def check_protocol_chains(new_data: dict):
             price = get_asset_price(protocol["gecko_id"]) if protocol["gecko_id"] else ""
             
             # Sending tweet about the new chain
-            twitter.update_status(f"🛠 {name} is now available on #{' / #'.join(new_chains)} 🔥\n\n"
+            twitter.create_tweet(text=f"🛠 {name} is now available on #{' / #'.join(new_chains)} 🔥\n\n"
                                 f"{price}\n\n{url}")
 
             # Updating chains list of this protocol in protocols.json
@@ -141,7 +141,7 @@ def check_new_protocols(new_data: dict):
             
             # Sending tweet
             try:
-                tweet = twitter.update_status(f"🎯 Now tracking {name} on DefiLlama 🦙\n\n"
+                tweet = twitter.create_tweet(text=f"🎯 Now tracking {name} on DefiLlama 🦙\n\n"
                                           f"{description}\n\n"
                                           f"🌐 Network(s): {chains}\n\n{price}\n{url}")
 
@@ -149,7 +149,7 @@ def check_new_protocols(new_data: dict):
                           f"TVL ⤵️️\n{chains_tvl}")
 
                 time.sleep(3)
-                twitter.update_status(status=tweet2, in_reply_to_status_id=tweet.id, auto_populate_reply_metadata=True)
+                twitter.create_tweet(text=tweet2, in_reply_to_status_id=tweet.id)
                 
                 # Adding the new protocol to protocols.json
                 old_data[id] = {"name": protocol["name"],
@@ -202,7 +202,7 @@ def tvl_change(new_data: dict, side: str, duration: str):
     tvl = requests.get(f"https://api.llama.fi/tvl/{slug}").json()
     
     # Sending tweet
-    twitter.update_status(f"🦙 {duration.capitalize()} #TVL {side} is {name} with a {round(int(percent_change), 0)} % {evolution}\n\n"
+    twitter.create_tweet(text=f"🦙 {duration.capitalize()} #TVL {side} is {name} with a {round(int(percent_change), 0)} % {evolution}\n\n"
                             f"🔐 Its TVL is now {round(int(float(tvl)), 2): ,d} $ 💵 across #{chains}.\n\n{token_price}\n\n"
                             f"https://defillama.com/protocol/{slug}")
     
